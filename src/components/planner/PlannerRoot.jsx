@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import PlannerPage from './PlannerPage';
 import { usePlannerState } from './usePlannerState';
@@ -5,7 +6,7 @@ import { usePlannerCalculations } from './usePlannerCalculations';
 import { usePlannerValidation } from './usePlannerValidation';
 import { DEFAULT_SEMESTERS } from './constants';
 
-export default function PlannerRoot() {
+export default function PlannerRoot({ initialCloudData }) {
   const {
     totalSemesters,
     semesterGpas,
@@ -18,6 +19,19 @@ export default function PlannerRoot() {
     semesterValues,
   } = usePlannerState();
 
+  // Hydrate from cloud data
+  useEffect(() => {
+    if (initialCloudData && initialCloudData.length > 0) {
+      const gpas = Array.from({ length: totalSemesters }, () => '');
+      initialCloudData.forEach((sem) => {
+        if (sem.semester_no <= totalSemesters) {
+          gpas[sem.semester_no - 1] = sem.semester_gpa !== null && sem.semester_gpa !== 0 ? sem.semester_gpa.toString() : '';
+        }
+      });
+      setSemesterGpas(gpas);
+    }
+  }, [initialCloudData, totalSemesters, setSemesterGpas]);
+
   const {
     completedSemesters,
     remainingSemesters,
@@ -29,8 +43,6 @@ export default function PlannerRoot() {
     requiredGpa,
     maxPossibleFinal,
     estimatedFinalCgpa,
-    performanceTrend,
-    academicStanding,
   } = usePlannerCalculations({ totalSemesters, semesterValues, targetFinalCgpa });
 
   const { validationErrors } = usePlannerValidation({ semesterGpas, semesterValues });
@@ -58,7 +70,6 @@ export default function PlannerRoot() {
         lowestGpaSemester={lowestGpaSemester}
         semesterGpas={semesterGpas}
         validationErrors={validationErrors}
-        updateSemesterGpa={updateSemesterGpa}
         targetInfo={{ requiredGpa, maxPossibleFinal, estimatedFinalCgpa }}
         setDefaultPlanner={resetPlanner}
       />

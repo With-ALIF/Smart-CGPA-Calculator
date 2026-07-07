@@ -3,12 +3,12 @@ import SubjectTable from '../components/SubjectTable';
 import ResultDashboard from '../components/ResultDashboard';
 import WhatIfCalculator from '../components/WhatIfCalculator';
 
-function CalculatorPage({ subjectCount, rows, onCountChange, onRowChange, onReset, metrics }) {
+function CalculatorPage({ subjectCount, rows, onCountChange, onRowChange, onReset, metrics, currentSemester, onSemesterChange }) {
   return (
     <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="order-2 lg:order-1 space-y-6">
-          <SubjectTable subjectCount={subjectCount} rows={rows} onCountChange={onCountChange} onRowChange={onRowChange} onReset={onReset} />
+          <SubjectTable subjectCount={subjectCount} rows={rows} onCountChange={onCountChange} onRowChange={onRowChange} onReset={onReset} currentSemester={currentSemester} onSemesterChange={onSemesterChange} />
         </div>
         <div className="order-1 lg:order-2 space-y-6">
           <ResultDashboard metrics={metrics} />

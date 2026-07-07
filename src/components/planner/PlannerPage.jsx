@@ -18,15 +18,12 @@ export default function PlannerPage({
   lowestGpaSemester,
   semesterGpas,
   validationErrors,
-  updateSemesterGpa,
   targetInfo,
   setDefaultPlanner,
 }) {
   return (
     <div className="space-y-6">
-      <PlannerHeader 
-        onCalculate={setDefaultPlanner} 
-      />
+      <PlannerHeader />
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         {/* Right Column: Dashboard Sidebar (Shows at the top on mobile) */}
         <div className="space-y-6 order-1 lg:order-2">
@@ -53,6 +50,7 @@ export default function PlannerPage({
             targetFinalCgpa={targetFinalCgpa}
             handleTotalSemestersChange={handleTotalSemestersChange}
             setTargetFinalCgpa={setTargetFinalCgpa}
+            disabled={currentCgpa === 0}
           />
         </div>
 
@@ -61,12 +59,10 @@ export default function PlannerPage({
           <PlannerInputSection
             totalSemesters={totalSemesters}
             semesterGpas={semesterGpas}
-            validationErrors={validationErrors}
-            updateSemesterGpa={updateSemesterGpa}
+            disabled={currentCgpa === 0}
           />
         </div>
       </div>
     </div>
   );
 }
-

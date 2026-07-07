@@ -4,6 +4,7 @@ import { BarChart3, CheckCircle2, TrendingDown, TrendingUp, Zap } from 'lucide-r
 export default function PlannerTopStats({ currentCgpa, completedSemesters, remainingSemesters, highestGpa, lowestGpa, highestGpaSemester, lowestGpaSemester }) {
   return (
     <StatsCards
+      className="lg:grid-cols-1"
       stats={[
         { label: 'Current CGPA', value: currentCgpa.toFixed(2), icon: CheckCircle2 },
         { label: 'Completed Semesters', value: completedSemesters, icon: BarChart3 },

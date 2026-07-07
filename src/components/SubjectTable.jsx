@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Calculator, RotateCcw } from 'lucide-react';
 import { creditOptions, gradeScale } from '../data/grades';
 
-function SubjectTable({ subjectCount, rows, onCountChange, onRowChange, onReset }) {
+function SubjectTable({ subjectCount, rows, onCountChange, onRowChange, onReset, currentSemester, onSemesterChange }) {
   return (
     <section className="rounded-[28px] border border-white/70 bg-white/70 p-5 shadow-xl shadow-slate-200/60 backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-900/70 dark:shadow-black/30 sm:p-6">
       <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -10,13 +10,25 @@ function SubjectTable({ subjectCount, rows, onCountChange, onRowChange, onReset 
           <h2 className="text-xl font-semibold">Subject Input</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">Select how many subjects you want to evaluate.</p>
         </div>
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
-          <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Subjects</label>
-          <select value={subjectCount} onChange={(e) => onCountChange(Number(e.target.value))} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium outline-none dark:border-slate-700 dark:bg-slate-900">
-            {Array.from({ length: 15 }, (_, i) => i + 1).map((count) => (
-              <option key={count} value={count}>{count}</option>
-            ))}
-          </select>
+        <div className="flex flex-wrap gap-3">
+          {onSemesterChange && (
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
+              <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Semester</label>
+              <select value={currentSemester || 1} onChange={(e) => onSemesterChange(Number(e.target.value))} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium outline-none dark:border-slate-700 dark:bg-slate-900">
+                {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
+                  <option key={num} value={num}>Semester {num}</option>
+                ))}
+              </select>
+            </div>
+          )}
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
+            <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Subjects</label>
+            <select value={subjectCount} onChange={(e) => onCountChange(Number(e.target.value))} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium outline-none dark:border-slate-700 dark:bg-slate-900">
+              {Array.from({ length: 15 }, (_, i) => i + 1).map((count) => (
+                <option key={count} value={count}>{count}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -30,12 +42,17 @@ function SubjectTable({ subjectCount, rows, onCountChange, onRowChange, onReset 
           <motion.div layout key={row.id} className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800/80">
             <div className="flex flex-col gap-3 md:grid md:grid-cols-[1fr_1fr_1fr] md:items-center">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-500 text-sm font-semibold text-white">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-500 text-sm font-semibold text-white">
                   {index + 1}
                 </div>
-                <div>
-                  <p className="font-medium">Subject {index + 1}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Credit and grade selection</p>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    value={row.name || ''}
+                    onChange={(e) => onRowChange(index, 'name', e.target.value)}
+                    placeholder={`Subject ${index + 1}`}
+                    className="w-full bg-transparent font-medium outline-none placeholder:text-slate-400 dark:text-slate-200"
+                  />
                 </div>
               </div>
               <select value={row.credit} onChange={(e) => onRowChange(index, 'credit', Number(e.target.value))} className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none dark:border-slate-700 dark:bg-slate-900">
