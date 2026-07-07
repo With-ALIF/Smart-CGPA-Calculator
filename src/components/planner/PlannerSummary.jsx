@@ -7,7 +7,7 @@ export default function PlannerSummary({ targetFinalCgpa, requiredGpa, remaining
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">Required GPA Calculator</p>
         <div className="mt-4 space-y-3">
           <div className="rounded-3xl border border-slate-200 bg-white/90 p-4 dark:border-slate-700 dark:bg-slate-900/80">
-            <p className="text-sm text-slate-500 dark:text-slate-400">Completed Semesters</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Remaining Semesters</p>
             <p className="mt-2 text-2xl font-semibold">{remainingSemesters}</p>
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white/90 p-4 dark:border-slate-700 dark:bg-slate-900/80">

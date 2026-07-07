@@ -3,7 +3,6 @@ import PlannerPage from './PlannerPage';
 import { usePlannerState } from './usePlannerState';
 import { usePlannerCalculations } from './usePlannerCalculations';
 import { usePlannerValidation } from './usePlannerValidation';
-import { getPlannerSuggestion, getInsightMessage } from './insights';
 import { DEFAULT_SEMESTERS } from './constants';
 
 export default function PlannerRoot() {
@@ -25,6 +24,8 @@ export default function PlannerRoot() {
     currentCgpa,
     highestGpa,
     lowestGpa,
+    highestGpaSemester,
+    lowestGpaSemester,
     requiredGpa,
     maxPossibleFinal,
     estimatedFinalCgpa,
@@ -34,13 +35,11 @@ export default function PlannerRoot() {
 
   const { validationErrors } = usePlannerValidation({ semesterGpas, semesterValues });
   const hasTarget = targetFinalCgpa !== '' && Number.isFinite(Number(targetFinalCgpa));
-  const insight = getInsightMessage({ highestGpa, lowestGpa, performanceTrend, hasTarget, requiredGpa });
-  const suggestions = getPlannerSuggestion({ completedSemesters, currentCgpa, hasTarget, requiredGpa });
 
   const resetPlanner = () => {
     setTotalSemesters(DEFAULT_SEMESTERS);
     setSemesterGpas(Array.from({ length: DEFAULT_SEMESTERS }, () => ''));
-    setTargetFinalCgpa('');
+    setTargetFinalCgpa('3.00');
   };
 
   return (
@@ -55,15 +54,12 @@ export default function PlannerRoot() {
         remainingSemesters={remainingSemesters}
         highestGpa={highestGpa}
         lowestGpa={lowestGpa}
+        highestGpaSemester={highestGpaSemester}
+        lowestGpaSemester={lowestGpaSemester}
         semesterGpas={semesterGpas}
         validationErrors={validationErrors}
         updateSemesterGpa={updateSemesterGpa}
-        performanceTrend={performanceTrend}
-        academicStanding={academicStanding}
         targetInfo={{ requiredGpa, maxPossibleFinal, estimatedFinalCgpa }}
-        insight={insight}
-        suggestions={suggestions}
-        hasTarget={hasTarget}
         setDefaultPlanner={resetPlanner}
       />
     </motion.section>

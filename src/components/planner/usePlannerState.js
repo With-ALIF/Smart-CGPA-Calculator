@@ -4,7 +4,7 @@ import { DEFAULT_SEMESTERS, STORAGE_KEY } from './constants';
 export function usePlannerState() {
   const [totalSemesters, setTotalSemesters] = useState(DEFAULT_SEMESTERS);
   const [semesterGpas, setSemesterGpas] = useState(Array.from({ length: DEFAULT_SEMESTERS }, () => ''));
-  const [targetFinalCgpa, setTargetFinalCgpa] = useState('');
+  const [targetFinalCgpa, setTargetFinalCgpa] = useState('3.00');
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -23,6 +23,7 @@ export function usePlannerState() {
 
   const semesterValues = useMemo(
     () => semesterGpas.map((value) => {
+      if (typeof value === 'string' && value.trim() === '') return null;
       const parsed = Number(value);
       return Number.isFinite(parsed) ? parsed : null;
     }),

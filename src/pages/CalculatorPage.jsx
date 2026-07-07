@@ -7,10 +7,10 @@ function CalculatorPage({ subjectCount, rows, onCountChange, onRowChange, onRese
   return (
     <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-6">
+        <div className="order-2 lg:order-1 space-y-6">
           <SubjectTable subjectCount={subjectCount} rows={rows} onCountChange={onCountChange} onRowChange={onRowChange} onReset={onReset} />
         </div>
-        <div className="space-y-6">
+        <div className="order-1 lg:order-2 space-y-6">
           <ResultDashboard metrics={metrics} />
           <WhatIfCalculator baseCgpa={metrics.cgpa} rows={rows} />
         </div>

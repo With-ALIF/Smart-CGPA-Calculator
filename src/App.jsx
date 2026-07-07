@@ -64,41 +64,12 @@ function App() {
     const cgpa = totalCredits ? totalQualityPoints / totalCredits : 0;
     const gradePoints = validRows.map((row) => gradeScale[row.grade].gpa);
     const averageGradePoint = validRows.length ? gradePoints.reduce((a, b) => a + b, 0) / validRows.length : 0;
-    const highestGrade = validRows.length
-      ? Object.entries(gradeScale).find(([grade]) => validRows.some((row) => row.grade === grade))?.[0] || '—'
-      : '—';
-    const lowestGrade = validRows.length
-      ? Object.entries(gradeScale).slice().reverse().find(([grade]) => validRows.some((row) => row.grade === grade))?.[0] || '—'
-      : '—';
-
-    const distribution = Object.keys(gradeScale).reduce((acc, grade) => {
-      acc[grade] = validRows.filter((row) => row.grade === grade).length;
-      return acc;
-    }, {});
-
-    let insight = 'Needs Improvement';
-    if (cgpa >= 3.5) insight = 'Excellent Performance';
-    else if (cgpa >= 3.0) insight = 'Very Good Performance';
-    else if (cgpa >= 2.5) insight = 'Good Performance';
-
-    const suggestion = cgpa >= 3.5
-      ? 'You are performing excellently. Keep your momentum and stay consistent.'
-      : cgpa >= 3.0
-        ? 'You are in a strong position. A little focus on difficult courses can push you higher.'
-        : cgpa >= 2.5
-          ? 'You are doing well overall. Targeted revision can improve your results further.'
-          : 'Focus on consistency and attendance. Small gains in core subjects can lift your CGPA quickly.';
 
     return {
       totalCredits,
       totalQualityPoints,
       cgpa: Number(cgpa.toFixed(2)),
       averageGradePoint: Number(averageGradePoint.toFixed(2)),
-      highestGrade,
-      lowestGrade,
-      distribution,
-      insight,
-      suggestion,
     };
   }, [rows]);
 
@@ -115,7 +86,6 @@ function App() {
             </div>
             <div>
               <p className="text-sm font-semibold">CGPA Studio</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Planner • Analysis • What-if</p>
             </div>
           </div>
           <div className="flex gap-2">
@@ -123,7 +93,7 @@ function App() {
               Calculator
             </Link>
             <Link to="/tools" className={`rounded-full px-4 py-2 text-sm font-medium transition ${!isHome ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700'}`}>
-              Tools Page
+              Tools
             </Link>
           </div>
         </nav>
@@ -131,7 +101,7 @@ function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<CalculatorPage subjectCount={subjectCount} rows={rows} onCountChange={handleSubjectCountChange} onRowChange={updateRow} onReset={resetCalculator} metrics={metrics} />} />
-            <Route path="/tools" element={<ToolsPage metrics={metrics} />} />
+            <Route path="/tools" element={<ToolsPage />} />
           </Routes>
         </main>
 

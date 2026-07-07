@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { statusLabel, trendLabel } from './constants';
 
 export function usePlannerCalculations({ totalSemesters, semesterValues, targetFinalCgpa }) {
   const targetValue = useMemo(() => Number.isFinite(Number(targetFinalCgpa)) ? Number(targetFinalCgpa) : null, [targetFinalCgpa]);
@@ -26,17 +25,29 @@ export function usePlannerCalculations({ totalSemesters, semesterValues, targetF
     return currentCgpa;
   }, [completedSemesters, currentCgpa, targetFinalCgpa]);
 
-return {
-  completedSemesters,
-  remainingSemesters,
-  currentCgpa,
-  highestGpa,
-  lowestGpa,
-  requiredGpa,
-  maxPossibleFinal,
-  estimatedFinalCgpa,
-  performanceTrend: trendLabel(completedValues),
-  academicStanding: statusLabel(currentCgpa),
-  completedSum,
-};
+  const highestGpaSemester = useMemo(() => {
+    if (completedSemesters === 0 || highestGpa === null) return null;
+    const index = semesterValues.findIndex((val) => val === highestGpa);
+    return index !== -1 ? index + 1 : null;
+  }, [completedSemesters, highestGpa, semesterValues]);
+
+  const lowestGpaSemester = useMemo(() => {
+    if (completedSemesters === 0 || lowestGpa === null) return null;
+    const index = semesterValues.findIndex((val) => val === lowestGpa);
+    return index !== -1 ? index + 1 : null;
+  }, [completedSemesters, lowestGpa, semesterValues]);
+
+  return {
+    completedSemesters,
+    remainingSemesters,
+    currentCgpa,
+    highestGpa,
+    lowestGpa,
+    highestGpaSemester,
+    lowestGpaSemester,
+    requiredGpa,
+    maxPossibleFinal,
+    estimatedFinalCgpa,
+    completedSum,
+  };
 }

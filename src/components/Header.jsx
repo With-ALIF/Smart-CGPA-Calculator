@@ -6,7 +6,7 @@ function Header({ theme, toggleTheme, openInfo }) {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-start gap-4">
           <div>
-            <h1 className="text-2xl font-semibold sm:text-3xl">CGPA Calculator & Academic Planner</h1>
+            <h1 className="text-2xl font-semibold sm:text-3xl">CGPA Studio</h1>
           </div>
         </div>
         <div className="flex items-center gap-3">

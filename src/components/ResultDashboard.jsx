@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRightLeft, BadgeCheck, BookText, Star, TrendingUp } from 'lucide-react';
+import { BadgeCheck, BookText, Star, TrendingUp } from 'lucide-react';
 import { formatNumber } from '../data/grades';
 
 const cards = [
@@ -15,10 +15,7 @@ function ResultDashboard({ metrics }) {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold">Result Dashboard</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Animated academic overview</p>
-        </div>
-        <div className="rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-500 p-2 text-white">
-          <ArrowRightLeft size={18} />
+          <p className="text-sm text-slate-500 dark:text-slate-400">Academic overview</p>
         </div>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -33,10 +30,6 @@ function ResultDashboard({ metrics }) {
             <p className="text-2xl font-semibold">{value(metrics)}</p>
           </motion.div>
         ))}
-      </div>
-      <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300">
-        <p className="font-semibold">Performance Insight</p>
-        <p className="mt-1">{metrics.insight}</p>
       </div>
     </section>
   );

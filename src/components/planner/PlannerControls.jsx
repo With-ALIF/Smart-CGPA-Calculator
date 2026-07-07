@@ -35,7 +35,7 @@ export default function PlannerControls({ totalSemesters, targetFinalCgpa, handl
         </label>
       </div>
       <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-        Live calculations are updated automatically when semester GPAs are entered.
+        Updates automatically as you enter GPAs.
       </p>
     </div>
   );

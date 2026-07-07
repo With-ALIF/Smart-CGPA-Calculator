@@ -21,26 +21,13 @@ A modern, feature-rich, and fully responsive **CGPA Calculator** built with **Re
 - Average Grade Point
 - Highest Grade
 - Lowest Grade
-- Performance Summary
-- Animated statistic cards
 
-### 📈 Grade Distribution
-- Count of each letter grade
-- Grade summary cards
-- Performance overview
-
-### 📉 Interactive Charts
-- Animated Pie Chart
-- Animated Bar Chart
-- Responsive Recharts integration
 
 ### 🎯 Target CGPA Calculator
 Calculate the GPA required in your remaining credits to achieve your target CGPA.
 
 Includes:
 - Current CGPA
-- Completed Credits
-- Remaining Credits
 - Target CGPA
 - Required GPA
 - Impossible target detection
@@ -91,9 +78,6 @@ Optimized for:
 - 📊 Recharts
 - 🧭 React Router DOM
 - 🎯 Lucide React
-- 📄 jsPDF
-- 🖼️ html2canvas
-- 🖨️ react-to-print
 
 ---
 

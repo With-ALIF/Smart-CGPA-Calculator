@@ -1,21 +1,14 @@
-import { formatValue, statusColor, statusLabel } from './constants';
 
 export default function SemesterInputs({ totalSemesters, semesterGpas, validationErrors, updateSemesterGpa }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2">
       {Array.from({ length: totalSemesters }, (_, index) => {
         const value = semesterGpas[index];
         const error = validationErrors[index];
         return (
           <label key={index} className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900/80">
-            <div className="mb-3 flex items-center justify-between gap-2">
-              <div>
-                <p className="text-sm font-medium">Semester {index + 1} GPA</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Only enter completed semesters.</p>
-              </div>
-              <span className={`inline-flex rounded-full px-2 py-1 text-[11px] font-semibold ${value !== '' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200' : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}`}>
-                {value !== '' ? 'Completed' : 'Pending'}
-              </span>
+            <div className="mb-3">
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Semester {index + 1} GPA</p>
             </div>
             <input
               type="number"

@@ -1,7 +1,8 @@
-import PlannerHeaderSection from './PlannerHeaderSection';
+import PlannerHeader from './PlannerHeader';
+import PlannerControls from './PlannerControls';
+import PlannerTopStats from './PlannerTopStats';
 import PlannerInputSection from './PlannerInputSection';
-import PerformanceCards from './PerformanceCards';
-import PlannerSummaryPanel from './PlannerSummaryPanel';
+import PlannerSummary from './PlannerSummary';
 
 export default function PlannerPage({
   totalSemesters,
@@ -13,52 +14,59 @@ export default function PlannerPage({
   remainingSemesters,
   highestGpa,
   lowestGpa,
+  highestGpaSemester,
+  lowestGpaSemester,
   semesterGpas,
   validationErrors,
   updateSemesterGpa,
-  performanceTrend,
-  academicStanding,
   targetInfo,
-  insight,
-  suggestions,
-  hasTarget,
   setDefaultPlanner,
 }) {
   return (
-    <>
-      <PlannerHeaderSection
-        totalSemesters={totalSemesters}
-        targetFinalCgpa={targetFinalCgpa}
-        handleTotalSemestersChange={handleTotalSemestersChange}
-        setTargetFinalCgpa={setTargetFinalCgpa}
-        currentCgpa={currentCgpa}
-        completedSemesters={completedSemesters}
-        remainingSemesters={remainingSemesters}
-        highestGpa={highestGpa}
-        lowestGpa={lowestGpa}
-        lastCalculated={Date.now()}
-        onCalculate={() => null}
+    <div className="space-y-6">
+      <PlannerHeader 
+        onCalculate={setDefaultPlanner} 
       />
-      <PlannerInputSection
-        totalSemesters={totalSemesters}
-        semesterGpas={semesterGpas}
-        validationErrors={validationErrors}
-        updateSemesterGpa={updateSemesterGpa}
-      />
-      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <PerformanceCards performanceTrend={performanceTrend} academicStanding={academicStanding} />
-        <PlannerSummaryPanel
-          targetFinalCgpa={targetFinalCgpa}
-          requiredGpa={targetInfo.requiredGpa}
-          remainingSemesters={remainingSemesters}
-          maxPossibleFinal={targetInfo.maxPossibleFinal}
-          estimatedFinalCgpa={targetInfo.estimatedFinalCgpa}
-          insight={insight}
-          suggestions={suggestions}
-          hasTarget={hasTarget}
-          setDefaultPlanner={setDefaultPlanner}
-        />
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        {/* Right Column: Dashboard Sidebar (Shows at the top on mobile) */}
+        <div className="space-y-6 order-1 lg:order-2">
+          <PlannerSummary
+            targetFinalCgpa={targetFinalCgpa}
+            requiredGpa={targetInfo.requiredGpa}
+            remainingSemesters={remainingSemesters}
+            maxPossibleFinal={targetInfo.maxPossibleFinal}
+            estimatedFinalCgpa={targetInfo.estimatedFinalCgpa}
+          />
+          
+          <PlannerTopStats
+            currentCgpa={currentCgpa}
+            completedSemesters={completedSemesters}
+            remainingSemesters={remainingSemesters}
+            highestGpa={highestGpa}
+            lowestGpa={lowestGpa}
+            highestGpaSemester={highestGpaSemester}
+            lowestGpaSemester={lowestGpaSemester}
+          />
+
+          <PlannerControls
+            totalSemesters={totalSemesters}
+            targetFinalCgpa={targetFinalCgpa}
+            handleTotalSemestersChange={handleTotalSemestersChange}
+            setTargetFinalCgpa={setTargetFinalCgpa}
+          />
+        </div>
+
+        {/* Left Column: GPA Inputs (Shows below dashboard on mobile) */}
+        <div className="space-y-6 order-2 lg:order-1">
+          <PlannerInputSection
+            totalSemesters={totalSemesters}
+            semesterGpas={semesterGpas}
+            validationErrors={validationErrors}
+            updateSemesterGpa={updateSemesterGpa}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
+

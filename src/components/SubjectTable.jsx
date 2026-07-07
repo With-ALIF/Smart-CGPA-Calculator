@@ -44,6 +44,7 @@ function SubjectTable({ subjectCount, rows, onCountChange, onRowChange, onReset 
                 ))}
               </select>
               <select value={row.grade} onChange={(e) => onRowChange(index, 'grade', e.target.value)} className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none dark:border-slate-700 dark:bg-slate-900">
+                <option value="" disabled>Select grade</option>
                 {Object.entries(gradeScale).map(([grade, { label }]) => (
                   <option key={grade} value={grade}>{label}</option>
                 ))}

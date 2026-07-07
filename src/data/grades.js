@@ -17,7 +17,7 @@ export const createEmptyRows = (count) =>
   Array.from({ length: count }, (_, index) => ({
     id: index + 1,
     credit: 3,
-    grade: 'A',
+    grade: '',
   }));
 
 export const defaultRows = (count) => createEmptyRows(count);
