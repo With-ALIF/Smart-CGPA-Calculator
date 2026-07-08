@@ -11,8 +11,15 @@ export default function QuickCalculator() {
   const [rows, setRows] = useState(defaultRows(5));
 
   const handleSubjectCountChange = (count) => {
-    setSubjectCount(count);
-    setRows(createEmptyRows(count));
+    const newCount = Number(count);
+    setSubjectCount(newCount);
+    setRows((prevRows) => {
+      const currentCount = prevRows.length;
+      if (newCount > currentCount) {
+        return [...prevRows, ...createEmptyRows(newCount - currentCount)];
+      }
+      return prevRows.slice(0, newCount);
+    });
   };
 
   const updateRow = (index, key, value) => {

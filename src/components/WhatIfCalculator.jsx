@@ -58,12 +58,12 @@ function WhatIfCalculator({ baseCgpa, rows }) {
           const currentGrade = rows[change.subjectIndex]?.grade;
           const currentLabel = currentGrade && gradeScale[currentGrade] ? gradeScale[currentGrade].label : 'Not set';
           return (
-            <div key={index} className="grid grid-cols-1 gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-700 dark:bg-slate-800/80 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_auto] items-end">
+            <div key={index} className="grid grid-cols-1 gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-700 dark:bg-slate-800/80 md:grid-cols-[1.5fr_1fr_1fr_auto] items-end">
               <label className="block w-full">
                 <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Subject</span>
                 <select value={change.subjectIndex} onChange={(e) => updateChange(index, 'subjectIndex', Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-900">
-                  {rows.map((_, subjectIndex) => (
-                    <option key={subjectIndex} value={subjectIndex}>Subject {subjectIndex + 1}</option>
+                  {rows.map((row, subjectIndex) => (
+                    <option key={subjectIndex} value={subjectIndex}>{row.name || `Subject ${subjectIndex + 1}`}</option>
                   ))}
                 </select>
               </label>
@@ -76,7 +76,14 @@ function WhatIfCalculator({ baseCgpa, rows }) {
               <label className="block w-full">
                 <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Change to</span>
                 <select value={change.targetGrade} onChange={(e) => updateChange(index, 'targetGrade', e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-900">
-                  {Object.entries(gradeScale).map(([grade, { label }]) => <option key={grade} value={grade}>{label}</option>)}
+                  {Object.entries(gradeScale)
+                    .filter(([_, gradeInfo]) => {
+                      if (!currentGrade) return true;
+                      const currentGpa = gradeScale[currentGrade]?.gpa ?? -1;
+                      return gradeInfo.gpa >= currentGpa;
+                    })
+                    .map(([grade, { label }]) => <option key={grade} value={grade}>{label}</option>)
+                  }
                 </select>
               </label>
               <button onClick={() => removeChange(index)} className="flex h-[38px] w-full items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 text-rose-600 transition hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-900/20 dark:text-rose-300 md:w-auto" title="Delete">
